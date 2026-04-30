@@ -70,7 +70,7 @@ usage() {
     ${SCRIPT_NAME} [-hv] [--root DIR] [--no-recursive]
 
  DESCRIPTION
-    Lists --short-help from executable scripts and binaries.
+    Lists --short-help from executable .sh scripts.
 
     Default scan path:
       ${SCRIPT_DIR}
@@ -213,7 +213,7 @@ for root in "${ROOTS[@]}"; do
             SEEN_ABS["$tool_path"]=1
             printf '%s\t%s\n' "$tool_path" "$root" >> "$tmp_unique"
             printf '%s\n' "$tool_path" >> "$tmp_scan"
-        done < <(find "$root" -type f -executable)
+        done < <(find "$root" -type f -name '*.sh' -executable)
     else
         while IFS= read -r tool; do
             tool_path="$(readlink -f "$tool" 2>/dev/null || printf '%s\n' "$tool")"
@@ -222,7 +222,7 @@ for root in "${ROOTS[@]}"; do
             SEEN_ABS["$tool_path"]=1
             printf '%s\t%s\n' "$tool_path" "$root" >> "$tmp_unique"
             printf '%s\n' "$tool_path" >> "$tmp_scan"
-        done < <(find "$root" -maxdepth 1 -type f -executable)
+        done < <(find "$root" -maxdepth 1 -type f -name '*.sh' -executable)
     fi
 done
 
